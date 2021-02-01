@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>变换</title>
+</head>
+
+<body>
+  <script src="../utils/three.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, document.documentElement.clientWidth / document.documentElement.clientHeight, 0.1, 1000);
+    camera.position.set(0, 0, 100);
+    const renderer = new THREE.WebGLRenderer()
+    renderer.setSize(document.documentElement.clientWidth, document.documentElement.clientHeight)
+    document.body.appendChild(renderer.domElement)
+    const light = new THREE.PointLight(0xffffff)
+    light.position.set(0, 0, 1000)
+    scene.add(light)
+
+
+    const geometry = new THREE.BoxGeometry(20, 20, 20);// box 几何体
+    const material = new THREE.MeshLambertMaterial({
+      color: 0xffff000
+    });
+    const mesh = new THREE.Mesh(geometry, material)
+    scene.add(mesh)
+
+    //  translate(XYZ)是在原来的位置平移，position.set是重置位置坐标
+    mesh.translateX(-100) // 移动
+    mesh.translateX(20) // 移动
+    // mesh.translateZ(-20) // 移动
+    // scene.position.set(20, 0, 0)
+    // scene.position.set(40, 0, 0)
+
+
+    const mesh2 = new THREE.Mesh(geometry, material)
+
+    // scale.xyz和scale.set()一致
+    mesh2.scale.x = 2 // 缩放
+    mesh2.scale.y = 2 // 缩放
+    mesh2.scale.z = 2 // 缩放
+    mesh2.scale.set(1.5, 1.5, 1.5)
+    scene.add(mesh2)
+
+
+
+    anima()
+    function anima() {
+      mesh.rotation.x += 0.01;
+      mesh.rotation.y += 0.01;
+      mesh2.rotation.x += 0.01;
+      mesh2.rotation.y += 0.01;
+      renderer.render(scene, camera)
+      window.requestAnimationFrame(anima)
+    }
+  </script>
+</body>
+
+</html>

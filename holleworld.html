@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="https://cdn.bootcss.com/three.js/100/three.min.js"></script>
+  <script>
+    var scene = new THREE.Scene(); // 场景
+    var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000); //透视摄像机： (视角，长宽比，远剪切面，近剪切面)
+
+    var renderer = new THREE.WebGLRenderer(); // 渲染器
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    var geometry = new THREE.BoxGeometry(1, 1, 1); // 创建立方体
+    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // 立方体渲染的材质
+    var cube = new THREE.Mesh(geometry, material); // 网格，（几何体，材质）
+    scene.add(cube);// 把网格对象放入场景，坐标为(0,0,0)的位置，以摄像机位置重合了
+
+    camera.position.z = 3; // 摄像机稍微向外移动一些即可
+
+    var animate = function () {
+      requestAnimationFrame(animate);
+
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+
+      renderer.render(scene, camera);
+    };
+
+    animate();
+  </script>
+</body>
+
+
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>材质</title>
+</head>
+
+<body>
+  <script src="../utils/three.js"></script>
+  <script>
+    // 创建场景
+    const scene = new THREE.Scene();
+
+    // 创建照相机
+    const camera = new THREE.PerspectiveCamera(65, 2 / 1, 0.1, 1000);
+    camera.position.set(0, 0, 500)
+    camera.lookAt(camera.position)
+
+    // 创建渲染器
+    const renderer = new THREE.WebGLRenderer()
+    renderer.setSize(800, 400);
+    document.body.appendChild(renderer.domElement);
+
+    //点光源
+    var point = new THREE.PointLight(0xffffff);
+    point.position.set(0, 0, 300); //点光源位置
+    scene.add(point); //点光源添加到场景中
+
+    // 网格模型{几何体，材质}
+    var geometry3 = new THREE.BoxGeometry(100, 100, 100);
+    var material3 = new THREE.MeshStandardMaterial({
+      color: 0xffff00,
+      specular: 0x4488ee,
+      shininess: 12
+    });
+    var mesh3 = new THREE.Mesh(geometry3, material3); //网格模型对象Mesh
+
+    // mesh3.translateX(120); //球体网格模型沿Y轴正方向平移120
+    // mesh3.position.set(2, 0, 0);//设置mesh3模型对象的xyz坐标为120,0,0
+    scene.add(mesh3); //
+    render()
+
+    function render() {
+      mesh3.rotation.y += 0.01
+      mesh3.rotation.x += 0.01
+      renderer.render(scene, camera)
+      window.requestAnimationFrame(render)
+    }
+
+  </script>
+</body>
+
+</html>

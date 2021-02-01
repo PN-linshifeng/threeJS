@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>group组对象</title>
+</head>
+
+<body>
+  <button id="sphere">删除球</button> <button id="sphereAdd">添加球</button> <button onclick="log()">打印group</button>
+  <script src="../utils/three.js"></script>
+  <script>
+    const sphere = document.getElementById("sphere")
+    const sphereAdd = document.getElementById("sphereAdd")
+    sphere.addEventListener('click', function () {
+      group.remove(mesh2)
+    }, false)
+    sphereAdd.addEventListener('click', function () {
+      group.add(mesh2)
+    }, false)
+    function log() {
+      console.log(group.children)
+    }
+
+
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(65, document.documentElement.clientWidth / document.documentElement.clientHeight, 0.1, 1000)
+    camera.position.set(0, 0, 100)
+    const renderer = new THREE.WebGLRenderer()
+    renderer.setSize(document.documentElement.clientWidth, document.documentElement.clientHeight)
+    document.body.appendChild(renderer.domElement)
+
+    // 光源
+    const light = new THREE.PointLight(0xffffff)
+    light.position.set(0, 0, 100)
+    scene.add(light)
+
+
+
+
+
+
+
+    // 几何体 材质 网格模型
+    const boxGeometry = new THREE.BoxGeometry(10, 10, 10);
+    const material = new THREE.MeshLambertMaterial({ color: 0xffff000 })
+    const mesh1 = new THREE.Mesh(boxGeometry, material)
+    mesh1.translateX(-30)
+
+    const sphereGeometry = new THREE.SphereGeometry(10, 30, 30)
+    const material2 = new THREE.MeshLambertMaterial({ color: 0x0000fff })
+    const mesh2 = new THREE.Mesh(sphereGeometry, material2)
+    mesh2.translateX(30)
+
+    // 组对象
+    const group = new THREE.Group()
+    group.add(mesh2, mesh1)
+    scene.add(group)
+    anima()
+    function anima() {
+      // console.log(mesh2.rotation.x)
+      group.rotation.x += 0.01
+      group.rotation.y += 0.01
+      // group.translateY(0.1)
+      renderer.render(scene, camera)
+      window.requestAnimationFrame(anima)
+    }
+
+
+
+  </script>
+</body>
+
+</html>

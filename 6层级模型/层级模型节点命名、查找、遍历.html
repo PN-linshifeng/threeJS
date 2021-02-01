@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>层级模型节点命名、查找、遍历</title>
+</head>
+
+<body>
+  <button id="traverse">traverse遍历</button>
+  <button id="getObjectByName">getObjectByName</button>
+  <script src="../utils/three.js"></script>
+  <script>
+    const traverse = document.getElementById('traverse')
+    const getObjectByName = document.getElementById('getObjectByName')
+    traverse.addEventListener('click', function () {
+      scene.traverse(function (obj) {
+
+        if (obj.type === 'Mesh') {
+          console.log('mesh name:', obj.name)
+        }
+        if (obj.type === 'Group') {
+          console.log('group name:', obj.name)
+        }
+      })
+    }, false)
+
+    getObjectByName.addEventListener('click', function () {
+      const sphere = scene.getObjectByName('圆形')
+      sphere.material.color.set(0xffffff)
+    }, false)
+
+
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(65, document.documentElement.clientWidth / document.documentElement.clientHeight, 0.1, 1000)
+    camera.position.set(0, 0, 100)
+    const renderer = new THREE.WebGLRenderer()
+    renderer.setSize(document.documentElement.clientWidth, document.documentElement.clientHeight)
+    document.body.appendChild(renderer.domElement);
+
+
+
+    // group
+    const group = new THREE.Group()
+    group.nama = "组1"
+
+    // 光源
+    const light = new THREE.PointLight(0xffffff)
+    light.position.set(0, 0, 100);
+    light.nama = "pointLight"; // 光源节点名称
+    scene.add(light);
+
+    // geometry
+    const boxGeometry = new THREE.BoxGeometry(15, 15, 15)
+    const material = new THREE.MeshLambertMaterial({ color: 0xffff00 })
+    const mesh = new THREE.Mesh(boxGeometry, material);
+    mesh.name = '放格'
+    mesh.translateX(-30)
+    group.add(mesh)
+
+    // sphere
+    const sphereGeometry = new THREE.SphereGeometry(15, 30, 30)
+    const material2 = new THREE.MeshLambertMaterial({ color: 0xf30f30 })
+    const mesh2 = new THREE.Mesh(sphereGeometry, material2);
+    mesh2.name = '圆形'
+    mesh2.translateX(30)
+    group.add(mesh2)
+
+    scene.add(group)
+
+    anima()
+    function anima() {
+      mesh.rotation.x += 0.01
+      mesh.rotation.y += 0.01
+      mesh2.rotation.x += 0.01
+      mesh2.rotation.y += 0.01
+      renderer.render(scene, camera)
+      window.requestAnimationFrame(anima)
+    }
+  </script>
+</body>
+
+</html>

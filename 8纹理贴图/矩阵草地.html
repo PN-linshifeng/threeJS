@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>矩阵草地</title>
+</head>
+
+<body> </body>
+<script src="../utils/three.js"></script>
+<script>
+  const scene = new THREE.Scene(); // 创建场景
+
+  // 创建照相机
+  const camera = new THREE.PerspectiveCamera(65, 2, 0.1, 1000);
+  camera.position.set(0, 0, 100)
+  camera.lookAt(camera.position)
+
+  // 创建渲染器
+  const renderer = new THREE.WebGLRenderer()
+  renderer.setSize(800, 400)
+  document.body.appendChild(renderer.domElement)
+
+  // 创建几何体
+  const geometry = new THREE.PlaneGeometry(300, 300)
+  // const geometry = new THREE.SphereGeometry(30, 50, 50)
+
+
+
+  // 光源
+  const light = new THREE.PointLight(0xffffff);
+  light.position.set(0, 0, 150)
+  scene.add(light)
+
+  // 加载纹理贴图
+  // const texture = new THREE.TextureLoader()
+  // texture.load('zaodi.png', function (texture) {
+  //   texture.wrapS = THREE.RepeatWrapping // 设置阵列
+  //   texture.wrapT = THREE.RepeatWrapping // 设置阵列
+  //   texture.repeat.set(20, 10)// uv两个方向纹理重复数量
+
+  //   var material = new THREE.MeshBasicMaterial({
+  //     // color: 0x0000ff,
+  //     // 设置颜色纹理贴图：Texture对象作为材质map属性的属性值
+  //     map: texture,//设置颜色贴图属性值
+  //   }); //材质对象Material
+  //   mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+  //   scene.add(mesh); //网格模型添加到场景中
+
+  //   renderer.render(scene, camera);
+
+  //   //纹理贴图加载成功后，调用渲染函数执行渲染操作
+  //   // render();
+  // })
+
+
+
+  // 加载纹理贴图
+  const texture = new THREE.TextureLoader().load('zaodi.png')
+  texture.wrapS = THREE.RepeatWrapping // 设置阵列
+  texture.wrapT = THREE.RepeatWrapping // 设置阵列
+  texture.repeat.set(20, 10)// uv两个方向纹理重复数量
+
+
+  // 材质
+  const material = new THREE.MeshBasicMaterial({
+    // color: 0x0000ff,
+    map: texture
+  })
+
+
+
+  // 网格模型
+  var mesh = new THREE.Mesh(geometry, material)
+  scene.add(mesh);
+  setTimeout(function () {
+
+    renderer.render(scene, camera)
+  }, 5000)
+
+</script>
+
+</html>

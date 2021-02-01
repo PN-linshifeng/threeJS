@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>材质</title>
+</head>
+
+<body>
+  <script src="../utils/three.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(65, 2, 0.1, 1000);
+    camera.position.set(0, 0, 100)
+
+    const render = new THREE.WebGLRenderer()
+    render.setSize(800, 400);
+    document.body.appendChild(render.domElement);
+
+    const geometry = new THREE.SphereGeometry(30, 20, 20)
+    const material = new THREE.PointsMaterial({
+      color: 0x0000ff,
+      size: 1
+    })
+
+    const point = new THREE.Points(geometry, material);
+    scene.add(point)
+
+
+    function renders() {
+      point.rotation.x += 0.005;
+      point.rotation.y += 0.01;
+      render.render(scene, camera)
+      window.requestAnimationFrame(renders)
+    }
+    renders()
+  </script>
+</body>
+
+</html>

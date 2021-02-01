@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>线</title>
+</head>
+
+<body>
+  <script src="https://cdn.bootcss.com/three.js/100/three.min.js"></script>
+  <script>
+    var scene = new THREE.Scene(); // 场景
+    var camera = new THREE.PerspectiveCamera(10, window.innerWidth / window.innerHeight, 0.1, 1000); //透视摄像机： (视角，长宽比，远剪切面，近剪切面)
+    var renderer = new THREE.WebGLRenderer(); // 渲染器
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+
+    camera.position.set(0, 0, 100)
+    camera.lookAt(0, 0, 0)
+
+    const meterial = new THREE.LineBasicMaterial({ color: 0x0000ff })
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3(-10, 0, 0));
+    geometry.vertices.push(new THREE.Vector3(0, 10, 0));
+    geometry.vertices.push(new THREE.Vector3(10, 0, 0));
+
+    const line = new THREE.Line(geometry, meterial)
+    scene.add(line)
+
+    renderer.render(scene, camera)
+  </script>
+</body>
+
+</html>

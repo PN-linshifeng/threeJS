@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>点模型</title>
+</head>
+
+<body>
+  <script src="../utils/three.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(65, 2, 0.1, 1000);
+    camera.position.set(0, 0, 100);
+    camera.lookAt(30, 0, 0)
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(800, 400);
+    document.body.appendChild(renderer.domElement)
+
+
+    const geometry = new THREE.BoxGeometry(50, 50, 50);
+    const material = new THREE.PointsMaterial({
+      color: 0x0000ff
+    })
+    const ponints = new THREE.Points(geometry, material)
+    scene.add(ponints)
+
+
+    let i = 0, dir = 1;
+    function anima() {
+      i = i + (0.5 * dir);
+      if (i > 30) {
+        dir = -1
+      }
+      if (i < -30) {
+        dir = 1
+      }
+      camera.lookAt(i, 0, 0)
+      renderer.render(scene, camera)
+      window.requestAnimationFrame(anima)
+    }
+    anima()
+  </script>
+</body>
+
+</html>
